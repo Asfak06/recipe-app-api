@@ -15,8 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework import routers
+from polls.views import PollViewSet
+
+
+# trailing_slash=False: should not contain "/" at the end of the url
+router = routers.DefaultRouter(trailing_slash=False)
+router.register(r"polls", PollViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/user/', include('user.urls'))
+    path('api/user/', include('user.urls')),
+    path('api/', include(router.urls)),
+    path('api/recipe/', include('recipe.urls')),
+    path('api/polls/', include('polls.urls')),
 ]
